@@ -5,6 +5,8 @@
     --light-color: white;
     --solarized-color: #f0f2f5;
     --dark-emphasis: #49aa26;
+    --light-emphasis: #3dd705;
+    --header-color: #2d4a22;
 }
 
 * {
@@ -20,7 +22,7 @@ body {
 }
 
 header {
-    background-color: #2d4a22;
+    background-color: var(--header-color);
     padding: 2rem 0 10rem;
     text-align: center;
 }
@@ -82,7 +84,7 @@ footer {
 }
 
 .button.new:hover {
-    color: #3dd705;
+    color: var(--light-emphasis);
 }
 
 .card {
@@ -135,7 +137,8 @@ footer {
 }
 
 .modal {
-    background-color: #f8f2f5;
+    /*  #f8f2f5 */
+    background-color: var(--solarized-color);
     padding: 2.4rem;
     position: relative;
 }
