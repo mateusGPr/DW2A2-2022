@@ -2,13 +2,13 @@
 
 :root {
     --dark-color: #363f5f;
-    --light-color: white;
+    --light-color: #FBFBFF;
     --solarized-color: #f0f2f5;
 
     --header-color: #462255;
-    --dark-emphasis: #01BAEF;
+    --dark-emphasis: #008ab1;
     --income-color: #12a454;
-    --light-emphasis: #3dd705;
+    --light-emphasis: #01BAEF;
 
     --cancel-color: #e92929;
 }
