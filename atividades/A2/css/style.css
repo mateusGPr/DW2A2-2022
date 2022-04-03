@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-    --dark-color: black;
+    --dark-color: #363f5f;
     --light-color: white;
-    --solarized-color: #E4E9EC;
+    --solarized-color: #e9d8a6;
 
-    --header-color: #3F5754;
-    --dark-emphasis: #0C1E1D;
-    --light-emphasis: #67796a;
+    --header-color: #001219;
+    --dark-emphasis: #ca6702;
+    --light-emphasis: #ee9b00;
 
     --cancel-color: #DB162F;
-    --income-color: #66942a;
+    --income-color: #66942a; 
 }
 
 * {
