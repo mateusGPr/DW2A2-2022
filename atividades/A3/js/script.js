@@ -8,36 +8,17 @@ const Modal = {
     }
 }
 
-const transactions = [
-    {
-        description: 'Luz',
-        amount: -20000,
-        date: '10/01/1995'
+const Storage = {
+    get(){
+        return JSON.parse(localStorage.getItem('transactions')) || []
     },
-    {
-        description: 'Luz',
-        amount: 20000,
-        date: '10/01/1995'
-    },
-    {
-        description: 'Luz',
-        amount: -20000,
-        date: '10/01/1995'
-    },
-    {
-        description: 'Luz',
-        amount: 20000,
-        date: '10/01/1995'
-    },
-    {
-        description: 'Luz',
-        amount: 20000,
-        date: '10/01/1995'
+    set(transactions) {
+        localStorage.setItem('transactions', JSON.stringify(transactions))
     }
-]
+}
 
 const Transaction = {
-    all: transactions,
+    all: Storage.get(),
 
     add(transaction) {
         Transaction.all.push(transaction)
@@ -184,12 +165,11 @@ const Form = {
     }
 }
 
-const Storage = {}
-
 const App = {
     init() {
-        transactions.forEach(htmlDocument.addTableRow)
+        Transaction.all.forEach(htmlDocument.addTableRow)
         htmlDocument.updateBalance()
+        Storage.set(Transaction.all)
     },
     reload() {
         htmlDocument.clearTable()
