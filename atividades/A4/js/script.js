@@ -9,7 +9,7 @@ const Modal = {
 }
 
 const Storage = {
-    get(){
+    get() {
         return JSON.parse(localStorage.getItem('transactions')) || []
     },
     set(transactions) {
@@ -105,16 +105,7 @@ const Utils = {
             style: 'currency',
             currency: 'BRL'
         })
-    },
-    formatCurrencyInput(text){
-        const sign = text.search('-') == -1
-        
-        return formatCurrency(text.replaceAll(/[\D]/gms, ''))
     }
-}
-
-const Callbacks = {
-
 }
 
 const Form = {
@@ -169,12 +160,18 @@ const Form = {
             Form.clear()
             Modal.Close()
         } catch (error) {
-            alert('Erro: ' + error.message)
+            alert(error.message)
         }
     },
 
-    amountChange(){
-        this.amount.text = Utils.formatCurrencyInput(this.amount.text)
+    amountKeyUp() {
+        let num = Number(this.amount.value.replaceAll(/\D+/g, ''))
+
+        if (num % 10 === 0) {
+            this.amount.value =( num / 100).toFixed(2)
+        } else {
+            this.amount.value = num / 10
+        }
     }
 }
 
