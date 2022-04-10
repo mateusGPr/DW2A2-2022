@@ -64,7 +64,7 @@ const htmlDocument = {
 
     addTableRowData(transaction, index) {
         const cssClass = transaction.amount < 0 ? 'expense' : 'income'
-        const amount = Utils.formatCurrency(transaction.amount)
+        const amount = Utils.formatCurrencyBy100(transaction.amount)
         const rowData = `
         <td class="description">${transaction.description}</td>
         <td class="${cssClass}">${amount}</td>
@@ -81,25 +81,43 @@ const htmlDocument = {
     updateBalance() {
         const sum = Transaction.totals();
 
-        htmlDocument.incomeCard.innerText = Utils.formatCurrency(sum.income)
-        htmlDocument.expenseCard.innerText = Utils.formatCurrency(sum.expense)
-        htmlDocument.totalCard.innerText = Utils.formatCurrency(sum.total)
+        htmlDocument.incomeCard.innerText = Utils.formatCurrencyBy100(sum.income)
+        htmlDocument.expenseCard.innerText = Utils.formatCurrencyBy100(sum.expense)
+        htmlDocument.totalCard.innerText = Utils.formatCurrencyBy100(sum.total)
     }
 }
 
 const Utils = {
     formatAmount(value) {
-        value = value.toString().replace(',', '.')
-        return Number(value) * 100
+        let sign = 1
+
+        if (value.match(/\-/g)) {
+            sign = -1
+        }
+
+        value = value.replaceAll(/\D+/g, '')
+
+
+        return Number(value) * sign
     },
     formatDate(value) {
         var splited = value.split('-')
         return `${splited[2]}/${splited[1]}/${splited[0]}`
     },
-    formatCurrency(value) {
+    formatCurrencyBy100(value) {
         const sign = Number(value) < 0 ? '-' : '';
 
         value = Math.abs(Number(value)) / 100
+
+        return sign + value.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        })
+    },
+    formatCurrency(value) {
+        const sign = Number(value) < 0 ? '-' : '';
+
+        value = Math.abs(Number(value))
 
         return sign + value.toLocaleString('pt-BR', {
             style: 'currency',
@@ -169,14 +187,23 @@ const Form = {
         }
     },
 
-    amountKeyUp() {
-        let num = Number(this.amount.value.replaceAll(/\D+/g, ''))
-        if (this.value == 0) {
-            this.amount.value = (num * 10).toFixed(2)
+    amountKeyUp(e) {
+        let num = Number(this.amount.value.replaceAll(/\D+/g, '')) * 0.01
+
+        if (this.amount.value.match(/\-/g)?.length == 1) {
+            num *= -1
+        }
+
+        if (num < 0) {
+            this.amount.style.color = getComputedStyle(document.documentElement)
+                .getPropertyValue('--cancel-color')
         }
         else {
-            this.amount.value = (num / 100).toFixed(2)
+            this.amount.style.color = getComputedStyle(document.documentElement)
+                .getPropertyValue('--income-color')
+
         }
+        this.amount.value = Utils.formatCurrency(num)
     }
 }
 
