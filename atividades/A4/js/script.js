@@ -150,6 +150,11 @@ const Form = {
         return true
     },
 
+    close() {
+        Form.clear()
+        Modal.Close()
+    },
+
     submit(event) {
         event.preventDefault()
 
@@ -166,11 +171,11 @@ const Form = {
 
     amountKeyUp() {
         let num = Number(this.amount.value.replaceAll(/\D+/g, ''))
-
-        if (num % 10 === 0) {
-            this.amount.value =( num / 100).toFixed(2)
-        } else {
-            this.amount.value = num / 10
+        if (this.value == 0) {
+            this.amount.value = (num * 10).toFixed(2)
+        }
+        else {
+            this.amount.value = (num / 100).toFixed(2)
         }
     }
 }
