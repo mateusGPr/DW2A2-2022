@@ -12,7 +12,7 @@
     --cancel-color: #DB162F;
     --income-color: #66942a;
 
-/* Theme 1
+    /* Theme 1
     --dark-color: #363f5f;
     --light-color: white;
     --solarized-color: #e9d8a6;
@@ -73,6 +73,7 @@ footer {
     color: var(--dark-color);
     opacity: 0.6;
 }
+
 
 /* https://webaim.org/techniques/css/invisiblecontent/ */
 .sr-only {
@@ -191,7 +192,6 @@ footer {
     opacity: 1;
 }
 
-
 .input-group.actions a.button.cancel,
 .input-group.actions button {
     width: 48%;
@@ -205,6 +205,19 @@ footer {
 
 .form h2 {
     margin-top: 0;
+}
+
+/* for chrome */
+#amount::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#amount {
+    text-align: right;
+    /* for mozilla */
+    -moz-appearance: textfield;
 }
 
 #logo {

@@ -7,10 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./atividades/A3/css/style.css">
     <style>
-        a{
+        @media (min-width: 768px) {
+            body {
+                font-size: 87.5%;
+            }
+
+            #balance {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1em;
+            }
+        }
+
+        a {
             text-decoration: none;
         }
-        header{
+
+        header {
             color: var(--light-color)
         }
     </style>
@@ -34,8 +47,14 @@
                 </div>
             </a>
             <a href="./atividades/A3/index.html">
-                <div class="card total">
+                <div class="card">
                     <h3>Aula 3</h3>
+                    <p>Ir...</p>
+                </div>
+            </a>
+            <a href="./atividades/A4/index.html">
+                <div class="card total">
+                    <h3>Aula 4</h3>
                     <p>Ir...</p>
                 </div>
             </a>
