@@ -27,8 +27,16 @@ const masks = {
             .replace(/\D/g, '')
             .replace(/(\d{5})(\d)/, '$1-$2')
             .replace(/(\-\d{3})(\d+?$)/, '$1')
+    },
+    name: function (val) {
+        if(val.match(/\d/g) == null){
+            document.getElementById("email").style.borderColor = "#ff0000"
+        }
+        return val;
+    },
+    email: function(val) {
+        return val;
     }
-
 }
 
 document.querySelectorAll("input").forEach((input) => {
