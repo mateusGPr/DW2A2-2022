@@ -29,12 +29,15 @@ const masks = {
             .replace(/(\-\d{3})(\d+?$)/, '$1')
     },
     name: function (val) {
-        if(val.match(/\d/g) == null){
-            document.getElementById("email").style.borderColor = "#ff0000"
+        if (val.match(/\d/g) == null) {
+            document.getElementById("name").style.borderColor = "#ff0000"
+        }
+        else {
+            document.getElementById("name").style.borderColor = "#ff0000"
         }
         return val;
     },
-    email: function(val) {
+    email: function (val) {
         return val;
     }
 }
