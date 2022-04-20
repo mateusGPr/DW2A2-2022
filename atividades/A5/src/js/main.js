@@ -30,10 +30,10 @@ const masks = {
     },
     name: function (val) {
         if (val.match(/\d/g) == null) {
-            document.getElementById("name").style.borderColor = "#ff0000"
+            document.getElementById("name").classList.add('errorInput')
         }
         else {
-            document.getElementById("name").style.borderColor = "#ff0000"
+            document.getElementById("name").classList.remove('errorInput')
         }
         return val;
     },
