@@ -1,4 +1,5 @@
 const Validate = {
+    result: document.getElementById('endereco'),
     /*
         Baseado na explicação de José Carlos Macoratti
         Link: https://www.macoratti.net/alg_cpf.htm
@@ -68,13 +69,65 @@ const Validate = {
         }
         return false
     },
+    nome: function (val) {
+        let res = val.match(/(\S+)/gm)
+        return res?.length < 2 | res == null
+    },
     email: function (val) {
         // https://datatracker.ietf.org/doc/html/rfc2822#section-3.4.1
         const RFC2822 = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
         return val.match(RFC2822) == null;
     },
+    fone: function (val){
+        const len = val.replace(/\D/g, '').length
+        return (len != 10) && (len != 11)
+    },
+    cep: function (val){
+        const validacep = /^[0-9]{8}$/;
+        return !validacep.test(val.replace(/\D/g, ''))
+    },
     daysInMonth: function (month, year) {
         return new Date(year, month, 0).getDate();
+    },
+    // https://viacep.com.br/exemplo/javascript/
+    cep_callback: function (conteudo) {
+        if (!("erro" in conteudo)) {
+            Validate.result.innerText =
+                `${conteudo.logradouro}, ${conteudo.bairro}, ${conteudo.localidade} - ${conteudo.uf}`;
+        }
+        else {
+            Validate.result.innerText = "Ocorreu um erro ou o CEP é inválido!";
+            return true
+        }
+        return false;
+    },
+    pesquisaCEP: function (valor) {
+        const cep = valor.replace(/\D/g, '');
+
+        console.log(cep);
+        if (cep != "") {
+            const validacep = /^[0-9]{8}$/;
+
+            if (validacep.test(cep)) {
+
+                Validate.result.innerText = "Aguarde...";
+                let script = document.createElement('script');
+
+                script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=cep_callback';
+
+                document.body.appendChild(script);
+
+            }
+            else {
+                Validate.result.innerText = "CEP inválido!";
+                return true
+            }
+        }
+        else {
+            Validate.result.innerText = "CEP inválido!";
+            return true
+        }
+        return false
     }
 }
 

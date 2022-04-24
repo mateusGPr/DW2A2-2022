@@ -16,6 +16,7 @@ const Main = {
         if (!Main.validate()) {
             alert('Verifique novamente os campos e preencha-os com dados válidos!')
         } else {
+            Validate.pesquisaCEP(Context.cepField.value);
             alert('Sucesso!')
         }
     },
@@ -48,6 +49,8 @@ const Main = {
     }
 }
 
+window.cep_callback = Validate.cep_callback
 Main.run()
 
 export default Main;
+
