@@ -1,51 +1,53 @@
-const masks = {
-    cpf: function (val) {
-        return val
-            .replace(/\D/g, '')
-            .replace(/(^\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-            .replace(/(\-\d{2})(\d+?$)/, '$1')
-    },
-    date: function (val) {
-        return val
-            .replace(/\D/g, '')
-            .replace(/(\d{2})(\d)/, '$1/$2')
-            .replace(/(\d{2})(\d)/, '$1/$2')
-            .replace(/(\/\d{4})(\d+?$)/, '$1')
-    },
-    fone: function (val) {
-        return val
-            .replace(/\D/g, '')
-            .replace(/(\d{2})(\d)/, '($1) $2')
-            .replace(/(\d{4})(\d)/, '$1-$2')
-            .replace(/(\d)(\d{3})\-(\d)(\d{4})/, '$1 $2$3-$4')
-            .replace(/(\-\d{4})(\d+?$)/, '$1')
-    },
-    cep: function (val) {
-        return val
-            .replace(/\D/g, '')
-            .replace(/(\d{5})(\d)/, '$1-$2')
-            .replace(/(\-\d{3})(\d+?$)/, '$1')
-    },
-    name: function (val) {
-        if (val.match(/\d/g) == null) {
-            document.getElementById("name").classList.add('errorInput')
+import Masks from './modules/mask.js';
+import Validate from './modules/validate.js';
+
+const Context = {
+    nomeField: document.getElementById('nome'),
+    cpfField: document.getElementById('cpf'),
+    dt_nascField: document.getElementById('dt_nasc'),
+    emailField: document.getElementById('email'),
+    foneField: document.getElementById('fone'),
+    cepField: document.getElementById('cep')
+}
+
+const Main = {
+    submitButton: function (event) {
+        event.preventDefault();
+        if (!Main.validate()) {
+            alert('Verifique novamente os campos e preencha-os com dados válidos!')
+        } else {
+            alert('Sucesso!')
         }
-        else {
-            document.getElementById("name").classList.remove('errorInput')
-        }
-        return val;
     },
-    email: function (val) {
-        return val;
+    formatError: function (field, err) {
+        field.classList.toggle('errorInput', err);
+    },
+    validate: function () {
+        for (const field in Context) {
+            if (Validate[Context[field].id] != null) {
+                if (Validate[Context[field].id](Context[field].value) != false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    },
+    run: function () {
+        for (const field in Context) {
+            if (Validate[Context[field].id] == null) {
+                Context[field].addEventListener('input', (event) => {
+                    Context[field].value = Masks[Context[field].id](Context[field].value)
+                })
+            } else {
+                Context[field].addEventListener('input', (event) => {
+                    Context[field].value = Masks[Context[field].id](Context[field].value)
+                    Main.formatError(Context[field], Validate[Context[field].id](Context[field].value))
+                })
+            }
+        }
     }
 }
 
-document.querySelectorAll("input").forEach((input) => {
-    const field = input.dataset.js
+Main.run()
 
-    input.addEventListener('input', (event) => {
-        event.target.value = masks[field](event.target.value)
-    })
-})
+export default Main;
