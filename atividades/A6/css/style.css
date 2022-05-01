@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap');
+
+* {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    margin: 0;
+}
+
+:root {
+    --width-margin: 2rem;
+    --height-margin: 2rem;
+    --view-width: calc(100vw - 2 * var(--width-margin));
+    --view-height: calc(100vh - 2 * var(--height-margin));
+}
+
+#overview {
+    width: var(--view-width);
+    height: var(--view-height);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: var(--width-margin) var(--height-margin);
+    background-color: #F5F9F8;
+    -webkit-box-shadow: 0px 0px 20px 1px rgba(45, 71, 83, 0.7);
+    box-shadow: 0px 0px 20px 1px rgba(45, 71, 83, 0.7);
+}
+
+#find {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    flex: auto;
+    height: 100%;
+    color: white;
+    font-size: 3vw;
+    background-image: linear-gradient(to right, #2d4753, #2f5f6c, #2e7882, #309295, #3baca3);
+}
+
+#cep-find, #find>h1 {
+    width: 90%;
+    text-align: center;
+}
+
+#cep {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-color: #1d3a42;
+    border: 1px solid #434343;
+    border-radius: 0.6rem;
+    padding: 0.4rem;
+
+    width: 24vw;
+    color: white;
+    font-size: 3vw;
+    text-align: center;
+}
+
+#cep:focus {
+    outline: none;
+    -webkit-box-shadow: 0px 0px 20px 1px rgba(69, 207, 196, 0.7);
+    box-shadow: 0px 0px 20px 1px rgba(69, 207, 196, 0.7);
+}
+
+#cep-error {
+    font-size: 1.5vw;
+    padding: 10px;
+    display: block;
+}
+
+#results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1rem;
+    flex: auto;
+    font-size: 3vw;
+    height: calc(100% - 2* 1rem);
+    background-color: #F5F9F8;
+    padding: 1rem;
+}
+
+#result {
+    font-size: min(1.5rem, 3vw);
+}
+
+#result>caption {
+    font-size: min(2rem, 3.2vw);
+    font-weight: 700;
+}
+
+#city,
+#state,
+#death,
+#cases,
+#suspects,
+#refuses,
+#datetime {
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+
+    #overview {
+        flex-flow: column nowrap;
+    }
+
+    #find {
+        flex: auto;
+        width: 100%;
+    }
+
+    #results {
+        flex: auto;
+        width: calc(100% - 2* 1rem);
+    }
+}
+
+@page {
+    size: A4;
+}
+
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+
+    #overview {
+        flex-flow: column nowrap;
+        background-color: white !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    #results {
+        align-self: flex-start;
+        align-items: flex-start;
+        width: calc(100% - 2* 1rem);
+    }
+}
