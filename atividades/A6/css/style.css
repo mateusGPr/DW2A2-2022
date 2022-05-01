@@ -83,11 +83,11 @@
 }
 
 #result {
-    font-size: min(1.5rem, 3vw);
+    font-size: max(1.5rem, 3vw);
 }
 
 #result>caption {
-    font-size: min(2rem, 3.2vw);
+    font-size: max(2rem, 3.2vw);
     font-weight: 700;
 }
 
