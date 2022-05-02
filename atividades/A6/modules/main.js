@@ -45,6 +45,7 @@ const SearchService = {
 
 const SearchForm = {
     cepField: document.getElementById('cep'),
+    cepFind: document.getElementById('cep-find'),
     errorField: document.getElementById('cep-error'),
     setAll: function (text) {
         for (const key in Fields) {
@@ -53,12 +54,12 @@ const SearchForm = {
     },
     seachCEP: async (text) => {
         SearchForm.setAll('Aguarde...')
-        SearchForm.errorField.innerText=''
+        SearchForm.errorField.innerText = ''
         try {
             const result = await SearchService.search(text)
             if (result.hasOwnProperty('error')) throw new Error('CEP ou UF inválido');
 
-            console.log(result)
+            //console.log(result)
             Fields.city.innerText = result.cepInfo.localidade
             Fields.state.innerText = `${result.covidInfo.state} - ${result.covidInfo.uf}`
             Fields.death.innerText = Number(result.covidInfo.deaths).toLocaleString()
@@ -70,7 +71,7 @@ const SearchForm = {
         }
         catch (err) {
             console.error(err)
-            SearchForm.errorField.innerText='CEP inválido!'
+            SearchForm.errorField.innerText = 'CEP inválido!'
             SearchForm.setAll('Informação indisponível...')
         }
     },
@@ -87,18 +88,30 @@ const SearchForm = {
     onInit: () => {
         cep.addEventListener('input', (event) => {
             event.target.value = SearchForm.cepMask(event.target.value)
-        });
+        });/* 
         cep.addEventListener('keyup', (event) => {
-            if(event.key === 'Enter' || event.keyCode === 13){
+            if (event.key === 'Enter' || event.keyCode === 13) {
                 const cep = event.target.value.replace(/\D/g, '')
 
-                if(SearchForm.cepValid(cep)){
+                if (SearchForm.cepValid(cep)) {
                     SearchForm.seachCEP(cep);
                 }
-                else{
+                else {
                     SearchForm.setAll('Informação indisponível...')
-                    SearchForm.errorField.innerText='CEP inválido!'
+                    SearchForm.errorField.innerText = 'CEP inválido!'
                 }
+            }
+        }) */
+        SearchForm.cepFind.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const cep = SearchForm.cepField.value.replace(/\D/g, '')
+
+            if (SearchForm.cepValid(cep)) {
+                SearchForm.seachCEP(cep);
+            }
+            else {
+                SearchForm.setAll('Informação indisponível...')
+                SearchForm.errorField.innerText = 'CEP inválido!'
             }
         })
         SearchForm.seachCEP('01153000')
